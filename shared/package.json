@@ -1,0 +1,45 @@
+{
+  "name": "@appetism/binant-codetest-shared",
+  "version": "1.1.10",
+  "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "http-status": "^1.4.0",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^9.0.0",
+    "minio": "^7.1.0",
+    "mongoose": "^5.13.16",
+    "mongoose-aggregate-paginate-v2": "^1.0.6",
+    "mongoose-paginate-v2": "^1.4.2",
+    "morgan": "^1.9.1",
+    "passport": "^0.6.0",
+    "passport-jwt": "^4.0.0",
+    "uuid": "^9.0.0",
+    "validator": "^13.7.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.7",
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^24.0.1",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-security": "^1.4.0",
+    "husky": "^7.0.2",
+    "is-ci": "^3.0.0",
+    "jest": "^26.0.1",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.0.5",
+    "supertest": "^6.0.1"
+  }
+}

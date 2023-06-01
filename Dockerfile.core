@@ -1,0 +1,18 @@
+FROM node:18-alpine
+
+ARG NODE_AUTH_TOKEN
+
+RUN mkdir -p /usr/src/binant-codetest-core && chown -R node:node /usr/src/binant-codetest-core
+RUN mkdir -p /usr/src/shared && chown -R node:node /usr/src/shared
+
+WORKDIR /usr/src/binant-codetest-core
+
+USER node
+
+COPY --chown=node:node ./core/package.json ./core/yarn.lock ./
+
+RUN yarn install
+
+COPY --chown=node:node ./core/src src
+
+CMD ["npm", "run", "dev"]

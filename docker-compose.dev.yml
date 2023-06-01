@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+  binant-codetest-core:
+    build:
+      context: .
+      dockerfile: Dockerfile.core
+    image: binant-codetest-core-dev
+    container_name: binant-codetest-core-dev
+    command: >
+      /bin/sh -c "cd /usr/src/binant-codetest-core/node_modules/@appetism
+      && rm -r binant-codetest-shared
+      && ln -s /usr/src/binant-codetest-shared binant-codetest-shared
+      && yarn dev -L"
+    volumes:
+      - ./core:/usr/src/binant-codetest-core
+      - ./shared:/usr/src/binant-codetest-shared
+      - /usr/src/binant-codetest-core/node_modules
+    env_file:
+      - .env.core
+    environment:
+      - NODE_ENV=development
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_DBNAME=linker
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+
+  binant-codetest-events:
+    build:
+      context: .
+      dockerfile: Dockerfile.events
+    image: binant-codetest-events-dev
+    container_name: binant-codetest-events-dev
+    command: >
+      /bin/sh -c "cd /usr/src/binant-codetest-events/node_modules/@appetism
+      && rm -r binant-codetest-shared
+      && ln -s /usr/src/binant-codetest-shared binant-codetest-shared
+      && yarn dev -L"
+    volumes:
+      - ./events:/usr/src/binant-codetest-events
+      - ./shared:/usr/src/binant-codetest-shared
+      - /usr/src/binant-codetest-events/node_modules
+    env_file:
+      - .env.events
+    environment:
+      - NODE_ENV=development
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_DBNAME=linker
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+

@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  binant-codetest-core:
+    depends_on:
+      - mongodb
+      - rabbitmq
+    networks:
+      - binant-codetest-shared-network
+
+  binant-codetest-events:
+    depends_on:
+      - rabbitmq
+      - mongodb
+    networks:
+      - binant-codetest-shared-network
+
+  nginx:
+    image: nginx:1.19.2-alpine
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - binant-codetest-core
+      - binant-codetest-events
+    ports:
+      - '3000:80'
+    networks:
+      - binant-codetest-shared-network
+
+  mongodb:
+    image: mongo
+    command: --replSet rsmongo --bind_ip 0.0.0.0
+    environment:
+      - MONGO_INITDB_DATABASE=linker
+    ports:
+      - '27017:27017'
+    volumes:
+      - dbdata:/data/db
+    networks:
+      - binant-codetest-shared-network
+
+  mongo-init-replica:
+    image: mongo
+    depends_on:
+      - mongodb
+    command: /init-replica.sh
+    volumes:
+      - ./init-replica.sh:/init-replica.sh
+    networks:
+      - binant-codetest-shared-network
+
+  rabbitmq:
+    image: rabbitmq:3.12-rc-management-alpine
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - binant-codetest-shared-network
+
+volumes:
+  dbdata:
+
+networks:
+  binant-codetest-shared-network:
+    driver: bridge
